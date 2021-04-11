@@ -20,7 +20,7 @@ runs:
   using: 'composite'
   steps:
     - name: 'Check PSI score for desktop'
-    - run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} desktop ${{ inputs.score }}
+      run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} desktop ${{ inputs.score }}
       shell: bash
       if: inputs.run-desktop
       
