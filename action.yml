@@ -1,0 +1,30 @@
+name: 'Bash PageSpeed Insights Check'
+description: 'Check against PageSpeed Insights using bash'
+inputs:
+  url:
+    description: 'The URL to check'
+    required: true
+  score:
+    description: 'The minimum score desired'
+    required: false
+    default: 90
+  run-desktop:
+    description: 'Flag indicating if test should be run for desktops'
+    required: false
+    default: false
+  run-mobile:
+    description: 'Flag indicating if test should be run for mobile devices'
+    required: false
+    default: false
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Check PSI score for desktop'
+    - run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} desktop ${{ inputs.score }}
+      shell: bash
+      if: inputs.run-desktop
+      
+    - name: 'Check PSI score for mobile'
+      run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} mobile ${{ inputs.score }}
+      shell: bash
+      if: inputs.run-mobile
