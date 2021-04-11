@@ -8,23 +8,13 @@ inputs:
     description: 'The minimum score desired'
     required: false
     default: 90
-  run-desktop:
-    description: 'Flag indicating if test should be run for desktops'
-    required: false
-    default: false
-  run-mobile:
-    description: 'Flag indicating if test should be run for mobile devices'
-    required: false
-    default: false
+  device-type:
+    description: 'Device type used for the run (desktop/mobile)'
+    required: true
+    default: 'desktop'
 runs:
   using: 'composite'
   steps:
-    - name: 'Check PSI score for desktop'
-      run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} desktop ${{ inputs.score }}
+    - name: 'Check PSI score'
+      run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} ${{ inputs.device-type }} ${{ inputs.score }}
       shell: bash
-      if: inputs.run-desktop
-      
-    - name: 'Check PSI score for mobile'
-      run: ${{ github.action_path }}/check-score.sh ${{ inputs.url }} mobile ${{ inputs.score }}
-      shell: bash
-      if: inputs.run-mobile
