@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SCORE=$(curl https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=$1&strategy=$2 | jq '.lighthouseResult.categories.performance.score')
+PAGE_TEXT=$(curl -s https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=$1&strategy=$2)
+SCORE=$(echo $PAGE_TEXT | jq '.lighthouseResult.categories.performance.score')
 PERFORMANCE_SCORE=$(printf %.0f $(echo $SCORE*100 | bc))
 
 if [ $PERFORMANCE_SCORE -ge $3 ]; then
